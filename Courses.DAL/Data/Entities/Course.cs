@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Courses.DAL.Models
+namespace Courses.DAL.Data.Entities
 {
     public class Course
     {

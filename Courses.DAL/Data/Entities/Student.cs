@@ -1,4 +1,4 @@
-﻿namespace Courses.DAL.Models
+﻿namespace Courses.DAL.Data.Entities
 {
     public class Student
     {
