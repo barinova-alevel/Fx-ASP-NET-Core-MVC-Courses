@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Cors.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -22,6 +24,10 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Courses}/{action=Index}/{id?}");
 
 app.Run();
+
+//add DI container!
+//builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+//builder.Services.AddScoped<ICourseService, CourseService>();
