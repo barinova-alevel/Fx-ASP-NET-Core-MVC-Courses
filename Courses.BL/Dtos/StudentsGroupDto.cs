@@ -1,6 +1,4 @@
-﻿using Courses.DAL.Data.Entities;
-
-namespace Courses.DAL.Models.Dtos
+﻿namespace Courses.DAL.Models.Dtos
 {
     public class StudentsGroupDto
     {
