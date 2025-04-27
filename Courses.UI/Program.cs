@@ -3,10 +3,11 @@ using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-//var connectionString = Environment.GetEnvironmentVariable("ASPNETCORE_ConnectionStrings__DefaultConnection");
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
 builder.Services.AddDbContext<CoursesDbContext>(options =>
 options.UseOracle(builder.Configuration.GetConnectionString("DefaultConnection")));
 
