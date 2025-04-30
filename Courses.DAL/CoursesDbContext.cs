@@ -31,8 +31,7 @@ namespace Courses.DAL
             if (!optionsBuilder.IsConfigured)
             {
                 var connectionString = Environment.GetEnvironmentVariable("ASPNETCORE_ConnectionStrings__DefaultConnection");
-                /*const string connectionString = "Server=OKSANA_NANGA;Database=BooksDb;Trusted_Connection=True;TrustServerCertificate=True;";*/
-                optionsBuilder.UseOracle(connectionString);
+                optionsBuilder.UseSqlServer(connectionString);
                 optionsBuilder.LogTo(message => System.Diagnostics.Debug.WriteLine(message));
             }
         }
