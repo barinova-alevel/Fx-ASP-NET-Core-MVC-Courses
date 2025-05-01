@@ -1,18 +1,27 @@
 using Courses.DAL;
 using Courses.DAL.Data;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
-var builder = WebApplication.CreateBuilder(args);
+IConfigurationRoot configurationBuilder = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
 
-builder.Services.AddControllersWithViews();
+Log.Logger = new LoggerConfiguration()
+            .ReadFrom.Configuration(configurationBuilder)
+            .CreateLogger();
+Log.Logger.Information("start");
 
-builder.Services.AddDbContext<CoursesDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+var webAppBuilder = WebApplication.CreateBuilder(args);
+webAppBuilder.Services.AddControllersWithViews();
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+webAppBuilder.Services.AddDbContext<CoursesDbContext>(options =>
+options.UseSqlServer(webAppBuilder.Configuration.GetConnectionString("DefaultConnection")));
+
+var connectionString = webAppBuilder.Configuration.GetConnectionString("DefaultConnection");
 Console.WriteLine($"Using connection: {connectionString}");
 
-var app = builder.Build();
+var app = webAppBuilder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -34,7 +43,3 @@ app.MapControllerRoute(
     pattern: "{controller=Courses}/{action=Index}/{id?}");
 
 app.Run();
-
-//add DI container!
-//builder.Services.AddScoped<ICourseRepository, CourseRepository>();
-//builder.Services.AddScoped<ICourseService, CourseService>();
