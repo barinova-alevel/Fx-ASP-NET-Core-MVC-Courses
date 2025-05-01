@@ -1,0 +1,440 @@
+[
+  {
+    "StudentId": 101,
+    "GroupId": 101,
+    "FirstName": "Elijah",
+    "LastName": "Hall"
+  },
+  {
+    "StudentId": 2,
+    "GroupId": 101,
+    "FirstName": "Ethan",
+    "LastName": "Anderson"
+  },
+  {
+    "StudentId": 3,
+    "GroupId": 101,
+    "FirstName": "Olivia",
+    "LastName": "Brown"
+  },
+  {
+    "StudentId": 4,
+    "GroupId": 101,
+    "FirstName": "Liam",
+    "LastName": "Campbell"
+  },
+  {
+    "StudentId": 5,
+    "GroupId": 101,
+    "FirstName": "Ava",
+    "LastName": "Carter"
+  },
+  {
+    "StudentId": 6,
+    "GroupId": 101,
+    "FirstName": "Noah",
+    "LastName": "Clark"
+  },
+  {
+    "StudentId": 7,
+    "GroupId": 101,
+    "FirstName": "Sophia",
+    "LastName": "Davis"
+  },
+  {
+    "StudentId": 8,
+    "GroupId": 101,
+    "FirstName": "Mason",
+    "LastName": "Edwards"
+  },
+  {
+    "StudentId": 9,
+    "GroupId": 101,
+    "FirstName": "Isabella",
+    "LastName": "Evans"
+  },
+  {
+    "StudentId": 10,
+    "GroupId": 101,
+    "FirstName": "Lucas",
+    "LastName": "Foster"
+  },
+  {
+    "StudentId": 11,
+    "GroupId": 2,
+    "FirstName": "Mia",
+    "LastName": "Garcia"
+  },
+  {
+    "StudentId": 12,
+    "GroupId": 2,
+    "FirstName": "Benjamin",
+    "LastName": "Gray"
+  },
+  {
+    "StudentId": 13,
+    "GroupId": 2,
+    "FirstName": "Amelia",
+    "LastName": "Green"
+  },
+  {
+    "StudentId": 14,
+    "GroupId": 2,
+    "FirstName": "Elijah",
+    "LastName": "Hall"
+  },
+  {
+    "StudentId": 15,
+    "GroupId": 2,
+    "FirstName": "Charlotte",
+    "LastName": "Harris"
+  },
+  {
+    "StudentId": 16,
+    "GroupId": 2,
+    "FirstName": "Alexander",
+    "LastName": "Hill"
+  },
+  {
+    "StudentId": 17,
+    "GroupId": 2,
+    "FirstName": "Harper",
+    "LastName": "Hughes"
+  },
+  {
+    "StudentId": 18,
+    "GroupId": 2,
+    "FirstName": "James",
+    "LastName": "Jackson"
+  },
+  {
+    "StudentId": 19,
+    "GroupId": 2,
+    "FirstName": "Evelyn",
+    "LastName": "Johnson"
+  },
+  {
+    "StudentId": 20,
+    "GroupId": 2,
+    "FirstName": "William",
+    "LastName": "Jones"
+  },
+  {
+    "StudentId": 21,
+    "GroupId": 2,
+    "FirstName": "Abigail",
+    "LastName": "Kelly"
+  },
+  {
+    "StudentId": 22,
+    "GroupId": 2,
+    "FirstName": "Logan",
+    "LastName": "Lewis"
+  },
+  {
+    "StudentId": 23,
+    "GroupId": 101,
+    "FirstName": "Emily",
+    "LastName": "Lopez"
+  },
+  {
+    "StudentId": 24,
+    "GroupId": 101,
+    "FirstName": "Jacob",
+    "LastName": "Martin"
+  },
+  {
+    "StudentId": 25,
+    "GroupId": 3,
+    "FirstName": "Lily",
+    "LastName": "Martinez"
+  },
+  {
+    "StudentId": 26,
+    "GroupId": 3,
+    "FirstName": "Michael",
+    "LastName": "Miller"
+  },
+  {
+    "StudentId": 27,
+    "GroupId": 3,
+    "FirstName": "Grace",
+    "LastName": "Mitchell"
+  },
+  {
+    "StudentId": 28,
+    "GroupId": 3,
+    "FirstName": "Daniel",
+    "LastName": "Moore"
+  },
+  {
+    "StudentId": 29,
+    "GroupId": 3,
+    "FirstName": "Chloe",
+    "LastName": "Nelson"
+  },
+  {
+    "StudentId": 30,
+    "GroupId": 3,
+    "FirstName": "Henry",
+    "LastName": "Parker"
+  },
+  {
+    "StudentId": 31,
+    "GroupId": 6,
+    "FirstName": "Zoe",
+    "LastName": "Perez"
+  },
+  {
+    "StudentId": 32,
+    "GroupId": 6,
+    "FirstName": "Matthew",
+    "LastName": "Phillips"
+  },
+  {
+    "StudentId": 33,
+    "GroupId": 6,
+    "FirstName": "Ella",
+    "LastName": "Powell"
+  },
+  {
+    "StudentId": 34,
+    "GroupId": 6,
+    "FirstName": "Jackson",
+    "LastName": "Roberts"
+  },
+  {
+    "StudentId": 35,
+    "GroupId": 6,
+    "FirstName": "Scarlett",
+    "LastName": "Robinson"
+  },
+  {
+    "StudentId": 36,
+    "GroupId": 6,
+    "FirstName": "Aiden",
+    "LastName": "Rodriguez"
+  },
+  {
+    "StudentId": 37,
+    "GroupId": 6,
+    "FirstName": "Aria",
+    "LastName": "Scott"
+  },
+  {
+    "StudentId": 38,
+    "GroupId": 6,
+    "FirstName": "Samuel",
+    "LastName": "Simmons"
+  },
+  {
+    "StudentId": 39,
+    "GroupId": 5,
+    "FirstName": "Ella",
+    "LastName": "Stewart"
+  },
+  {
+    "StudentId": 40,
+    "GroupId": 5,
+    "FirstName": "Luke",
+    "LastName": "Taylor"
+  },
+  {
+    "StudentId": 41,
+    "GroupId": 5,
+    "FirstName": "Hannah",
+    "LastName": "Thompson"
+  },
+  {
+    "StudentId": 42,
+    "GroupId": 5,
+    "FirstName": "Jack",
+    "LastName": "Walker"
+  },
+  {
+    "StudentId": 43,
+    "GroupId": 5,
+    "FirstName": "Madison",
+    "LastName": "White"
+  },
+  {
+    "StudentId": 44,
+    "GroupId": 5,
+    "FirstName": "Owen",
+    "LastName": "Williams"
+  },
+  {
+    "StudentId": 45,
+    "GroupId": 5,
+    "FirstName": "Nora",
+    "LastName": "Wilson"
+  },
+  {
+    "StudentId": 46,
+    "GroupId": 5,
+    "FirstName": "Caleb",
+    "LastName": "Young"
+  },
+  {
+    "StudentId": 47,
+    "GroupId": 4,
+    "FirstName": "Emma",
+    "LastName": "Smith"
+  },
+  {
+    "StudentId": 48,
+    "GroupId": 4,
+    "FirstName": "Liam",
+    "LastName": "Johnson"
+  },
+  {
+    "StudentId": 49,
+    "GroupId": 5,
+    "FirstName": "Noah",
+    "LastName": "Williams"
+  },
+  {
+    "StudentId": 50,
+    "GroupId": 5,
+    "FirstName": "Ava",
+    "LastName": "Jones"
+  },
+  {
+    "StudentId": 51,
+    "GroupId": 8,
+    "FirstName": "Sophia",
+    "LastName": "Brown"
+  },
+  {
+    "StudentId": 52,
+    "GroupId": 8,
+    "FirstName": "Mason",
+    "LastName": "Davis"
+  },
+  {
+    "StudentId": 53,
+    "GroupId": 8,
+    "FirstName": "Isabella",
+    "LastName": "Miller"
+  },
+  {
+    "StudentId": 54,
+    "GroupId": 5,
+    "FirstName": "Ethan",
+    "LastName": "Wilson"
+  },
+  {
+    "StudentId": 55,
+    "GroupId": 5,
+    "FirstName": "Olivia",
+    "LastName": "Moore"
+  },
+  {
+    "StudentId": 56,
+    "GroupId": 5,
+    "FirstName": "Lucas",
+    "LastName": "Taylor"
+  },
+  {
+    "StudentId": 57,
+    "GroupId": 5,
+    "FirstName": "Amelia",
+    "LastName": "Anderson"
+  },
+  {
+    "StudentId": 58,
+    "GroupId": 4,
+    "FirstName": "Emma",
+    "LastName": "Smith"
+  },
+  {
+    "StudentId": 59,
+    "GroupId": 4,
+    "FirstName": "Henry",
+    "LastName": "Johnson"
+  },
+  {
+    "StudentId": 60,
+    "GroupId": 5,
+    "FirstName": "Mia",
+    "LastName": "Williams"
+  },
+  {
+    "StudentId": 61,
+    "GroupId": 7,
+    "FirstName": "James",
+    "LastName": "Jones"
+  },
+  {
+    "StudentId": 62,
+    "GroupId": 7,
+    "FirstName": "Charlotte",
+    "LastName": "Brown"
+  },
+  {
+    "StudentId": 63,
+    "GroupId": 7,
+    "FirstName": "Alexander",
+    "LastName": "Davis"
+  },
+  {
+    "StudentId": 64,
+    "GroupId": 7,
+    "FirstName": "Grace",
+    "LastName": "Miller"
+  },
+  {
+    "StudentId": 65,
+    "GroupId": 7,
+    "FirstName": "Benjamin",
+    "LastName": "Wilson"
+  },
+  {
+    "StudentId": 66,
+    "GroupId": 7,
+    "FirstName": "Harper",
+    "LastName": "Moore"
+  },
+  {
+    "StudentId": 67,
+    "GroupId": 7,
+    "FirstName": "Jack",
+    "LastName": "Taylor"
+  },
+  {
+    "StudentId": 68,
+    "GroupId": 7,
+    "FirstName": "Ella",
+    "LastName": "Brown"
+  },
+  {
+    "StudentId": 69,
+    "GroupId": 7,
+    "FirstName": "Samuel",
+    "LastName": "Davis"
+  },
+  {
+    "StudentId": 70,
+    "GroupId": 7,
+    "FirstName": "Scarlett",
+    "LastName": "Miller"
+  },
+  {
+    "StudentId": 71,
+    "GroupId": 7,
+    "FirstName": "Logan",
+    "LastName": "Wilson"
+  },
+  {
+    "StudentId": 72,
+    "GroupId": 7,
+    "FirstName": "Abigail",
+    "LastName": "Moore"
+  },
+  {
+    "StudentId": 73,
+    "GroupId": 7,
+    "FirstName": "Abigail",
+    "LastName": "Young"
+  }
+]

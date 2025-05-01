@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Xml;
+﻿using System.Text.Json;
 using Courses.DAL.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -38,12 +32,42 @@ namespace Courses.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Course>().HasData(
-                new Course { CourseId = 1, Name = "Business", Description= "Field of study that deals with the principles of business, management, and economics. It combines elements of accountancy, finance, marketing, organizational studies, human resource management, and operations." });
-            modelBuilder.Entity<StudentsGroup>().HasData(
-                new StudentsGroup { StudentsGroupId=1,CourseId = 1, Name = "BR-01" });
-            modelBuilder.Entity<Student>().HasData(
-                new Student { StudentId = 1, GroupId = 1, FirstName= "Elijah", LastName = "Hall" });
+            base.OnModelCreating(modelBuilder);
+
+            var courses = LoadSeedData<Course>("courses.json");
+
+            if (courses != null)
+            {
+                modelBuilder.Entity<Course>().HasData(courses);
+            }
+
+            var groups = LoadSeedData<StudentsGroup>("groups.json");
+
+            if (groups != null)
+            {
+                modelBuilder.Entity<StudentsGroup>().HasData(groups);
+            }
+
+            var students = LoadSeedData<Student>("students.json");
+
+            if (students != null)
+            {
+                modelBuilder.Entity<Student>().HasData(students);
+            }
+        }
+
+        private List<T> LoadSeedData<T>(string filePath)
+        {
+            try
+            {
+                var jsonData = File.ReadAllText(filePath);
+                return JsonSerializer.Deserialize<List<T>>(jsonData);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to load seed data: {ex.Message}");
+                return null;
+            }
         }
     }
 }
