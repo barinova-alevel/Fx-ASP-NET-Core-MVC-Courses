@@ -1,0 +1,32 @@
+[
+  {
+    "CourseId": 101,
+    "Name": "Business",
+    "Description": "Field of study that deals with the principles of business, management, and economics. It combines elements of accountancy, finance, marketing, organizational studies, human resource management, and operations."
+  },
+  {
+    "CourseId": 2,
+    "Name": "Sales",
+    "Description": "Sales course covers a wide range of topics essential for developing effective selling skills. These include understanding the sales process, prospecting and lead generation, and building customer relationships."
+  },
+  {
+    "CourseId": 3,
+    "Name": "Marketing",
+    "Description": "An examination of managerial decision-making and problem-solving using the marketing mix and the activities it entails such as selling, advertising, pricing, consumer behavior, marketing research and channels of distribution."
+  },
+  {
+    "CourseId": 4,
+    "Name": "Computer science",
+    "Description": "The course is designed to teach the theoretical and practical aspects of computing, including programming, algorithms, data structures, software development, and computer systems."
+  },
+  {
+    "CourseId": 5,
+    "Name": "Hospitality",
+    "Description": "Hospitality, culinary arts, catering, events, human resources, marketing, sales, and finance."
+  },
+  {
+    "CourseId": 6,
+    "Name": "Arts",
+    "Description": "Combines a mixture of theoretical and practical course elements to nurture students in developing their own artistic work."
+  }
+]
