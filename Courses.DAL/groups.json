@@ -1,0 +1,56 @@
+[
+  {
+    "StudentsGroupId": 101,
+    "Name": "BR-01",
+    "CourseId": 101,
+    "TeacherId": 1
+  },
+  {
+    "StudentsGroupId": 2,
+    "Name": "BR-02",
+    "CourseId": 101,
+    "TeacherId": 2
+  },
+  {
+    "StudentsGroupId": 3,
+    "Name": "SR-01",
+    "CourseId": 2,
+    "TeacherId": 3
+  },
+  {
+    "StudentsGroupId": 4,
+    "Name": "CS-01",
+    "CourseId": 4,
+    "TeacherId": 4
+  },
+  {
+    "StudentsGroupId": 5,
+    "Name": "HP-01",
+    "CourseId": 5,
+    "TeacherId": 1
+  },
+  {
+    "StudentsGroupId": 6,
+    "Name": "TA-01",
+    "CourseId": 6,
+    "TeacherId": 2
+  },
+  {
+    "StudentsGroupId": 7,
+    "Name": "TA-02",
+    "CourseId": 6,
+    "TeacherId": 3
+  },
+  {
+    "StudentsGroupId": 8,
+    "Name": "M-01",
+    "CourseId": 3,
+    "TeacherId": 4
+  },
+  {
+    "StudentsGroupId": 9,
+    "Name": "M-02",
+    "CourseId": 3,
+    "TeacherId": 1
+  }
+]
