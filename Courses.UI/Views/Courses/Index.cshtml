@@ -1,5 +1,22 @@
-﻿@{
+﻿@model IEnumerable<Courses.DAL.Models.Dtos.CourseDto>
+@{
     ViewData["Title"] = "Courses List";
 }
 
-<p2>Courses view</p2>
+<div class="container">
+    <h1>Courses</h1>
+    <div class="row">
+        @foreach (var course in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@course.Name</h5>
+                        <p class="card-text">@course.Description</p>
+                        <a asp-action="Details" asp-route-id="@course.CourseId" class="btn btn-primary">View Groups</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

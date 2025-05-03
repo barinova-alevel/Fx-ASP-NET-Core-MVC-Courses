@@ -8,7 +8,7 @@ namespace Courses.DAL
     {
         public CoursesDbContext(DbContextOptions<CoursesDbContext> options) : base(options)
         {
-            
+
         }
 
         public CoursesDbContext()
@@ -34,6 +34,8 @@ namespace Courses.DAL
         {
             base.OnModelCreating(modelBuilder);
 
+            // Seed data loading is currently disabled
+            /*
             var courses = LoadSeedData<Course>("courses.json");
 
             if (courses != null)
@@ -54,6 +56,7 @@ namespace Courses.DAL
             {
                 modelBuilder.Entity<Student>().HasData(students);
             }
+            */
         }
 
         private List<T> LoadSeedData<T>(string filePath)

@@ -1,12 +1,31 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Courses.BL.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Courses.UI.Controllers
 {
     public class CoursesController : Controller
     {
-        public IActionResult Index()
+        private readonly ICourseService _courseService;
+
+        public CoursesController(ICourseService courseService)
         {
-            return View();
+            _courseService = courseService;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var courses = await _courseService.GetAllCoursesAsync();
+            return View(courses);
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var course = await _courseService.GetCourseByIdAsync(id);
+            if (course == null)
+            {
+                return NotFound();
+            }
+            return View(course);
         }
     }
 }

@@ -1,5 +1,7 @@
+using Courses.BL.Services;
 using Courses.DAL;
 using Courses.DAL.Data;
+using Courses.DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -18,9 +20,16 @@ webAppBuilder.Services.AddControllersWithViews();
 webAppBuilder.Services.AddDbContext<CoursesDbContext>(options =>
 options.UseSqlServer(webAppBuilder.Configuration.GetConnectionString("DefaultConnection")));
 
-var connectionString = webAppBuilder.Configuration.GetConnectionString("DefaultConnection");
-Console.WriteLine($"Using connection: {connectionString}");
+// Register repositories
+webAppBuilder.Services.AddScoped<ICourseRepository, CourseRepository>();
+webAppBuilder.Services.AddScoped<IStudentsGroupRepository, StudentsGroupRepository>();
 
+// Register services
+webAppBuilder.Services.AddScoped<ICourseService, CourseService>();
+webAppBuilder.Services.AddScoped<IStudentsGroupService, StudentsGroupService>();
+
+var connectionString = webAppBuilder.Configuration.GetConnectionString("DefaultConnection");
+Log.Logger.Information($"Using connection: {connectionString}");
 var app = webAppBuilder.Build();
 
 // Configure the HTTP request pipeline.

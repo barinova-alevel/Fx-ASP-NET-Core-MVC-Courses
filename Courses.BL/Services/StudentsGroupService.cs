@@ -1,7 +1,6 @@
-﻿using System.Xml.Linq;
-using Courses.DAL.Data.Entities;
-using Courses.DAL.Models.Dtos;
+﻿using Courses.DAL.Models.Dtos;
 using Courses.DAL.Repositories;
+using Serilog;
 
 namespace Courses.BL.Services
 {
@@ -34,7 +33,10 @@ namespace Courses.BL.Services
         public async Task<StudentsGroupDto> GetGroupByIdAsync(int id)
         {
             var group = await _groupRepository.GetByIdAsync(id);
-            if (group == null) throw new Exception($"Group with Id {id} not found");
+            if (group == null)
+            {
+                Log.Logger.Information($"Group with Id {id} not found");
+            }
 
             return new StudentsGroupDto
             {
