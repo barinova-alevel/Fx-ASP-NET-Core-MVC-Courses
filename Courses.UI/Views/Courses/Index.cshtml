@@ -5,18 +5,80 @@
 
 <div class="container">
     <h1>Courses</h1>
-    <div class="row">
-        @foreach (var course in Model)
-        {
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">@course.Name</h5>
-                        <p class="card-text">@course.Description</p>
-                        <a asp-action="Details" asp-route-id="@course.CourseId" class="btn btn-primary">View Groups</a>
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Description
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var course in Model)
+            {
+                <tr id="course-@course.CourseId">
+                    <td>@course.Name</td>
+                    <td>@course.Description</td>
+                    <td>
+                        <form asp-action="Index" method="get" style="display:inline;">
+                            <input type="hidden" name="selectedCourseId" value="@course.CourseId" />
+                            @if (ViewBag.ExpandedCourseIds.Contains(course.CourseId))
+                            {
+                                <input type="hidden" name="hideCourse" value="true" />
+                            }
+                            @foreach (var expandedId in ViewBag.ExpandedCourseIds)
+                            {
+                                if (expandedId != course.CourseId)
+                                {
+                                    <input type="hidden" name="expandedCourseIds" value="@expandedId" />
+                                }
+                            }
+                            <button type="submit" class="btn btn-link">
+                                @(ViewBag.ExpandedCourseIds.Contains(course.CourseId) ? "Hide groups" : "Show groups")
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                @if (ViewBag.ExpandedCourseIds.Contains(course.CourseId))
+                {
+                    <tr>
+                        <td colspan="3">
+                            <strong>Groups:</strong>
+                            @if (course.StudentsGroups != null && course.StudentsGroups.Any())
+                            {
+                                <ul>
+                                    @foreach (var group in course.StudentsGroups)
+                                    {
+                                        <li>@group.Name</li>
+                                    }
+                                </ul>
+                            }
+                            else
+                            {
+                                <span>No groups available.</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
 </div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectedCourseId = '@ViewBag.SelectedCourseId';
+            if (selectedCourseId) {
+                const element = document.getElementById('course-' + selectedCourseId);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+        });
+    </script>
+}

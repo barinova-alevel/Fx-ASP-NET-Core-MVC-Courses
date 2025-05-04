@@ -12,20 +12,23 @@ namespace Courses.UI.Controllers
             _courseService = courseService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? selectedCourseId, List<int> expandedCourseIds = null, bool? hideCourse = null)
         {
             var courses = await _courseService.GetAllCoursesAsync();
-            return View(courses);
-        }
-
-        public async Task<IActionResult> Details(int id)
-        {
-            var course = await _courseService.GetCourseByIdAsync(id);
-            if (course == null)
+            var expandedIds = expandedCourseIds ?? new List<int>();
+            
+            if (hideCourse == true && selectedCourseId.HasValue)
             {
-                return NotFound();
+                expandedIds.Remove(selectedCourseId.Value);
             }
-            return View(course);
+            else if (selectedCourseId.HasValue && !expandedIds.Contains(selectedCourseId.Value))
+            {
+                expandedIds.Add(selectedCourseId.Value);
+            }
+            
+            ViewBag.ExpandedCourseIds = expandedIds;
+            ViewBag.SelectedCourseId = selectedCourseId;
+            return View(courses);
         }
     }
 }

@@ -15,7 +15,10 @@ namespace Courses.DAL.Repositories
 
         public async Task<IEnumerable<Course>> GetAllAsync()
         {
-            return await _context.Courses.ToListAsync();
+            return await _context.Courses
+                .Include(c => c.StudentsGroups)
+                .ThenInclude(g => g.Students)
+                .ToListAsync();
         }
 
         public async Task<Course> GetByIdAsync(int id)
