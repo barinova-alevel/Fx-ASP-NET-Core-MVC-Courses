@@ -50,10 +50,53 @@
                             <strong>Groups:</strong>
                             @if (course.StudentsGroups != null && course.StudentsGroups.Any())
                             {
-                                <ul>
+                                <ul class="list-unstyled">
                                     @foreach (var group in course.StudentsGroups)
                                     {
-                                        <li>@group.Name</li>
+                                        <li class="mb-2">
+                                            <form asp-action="Index" method="get" style="display:inline;">
+                                                <input type="hidden" name="selectedCourseId" value="@course.CourseId" />
+                                                @foreach (var expandedId in ViewBag.ExpandedCourseIds)
+                                                {
+                                                    <input type="hidden" name="expandedCourseIds" value="@expandedId" />
+                                                }
+                                                <input type="hidden" name="selectedGroupId" value="@group.StudentsGroupId" />
+                                                @if (ViewBag.ExpandedGroupIds.Contains(group.StudentsGroupId))
+                                                {
+                                                    <input type="hidden" name="hideGroup" value="true" />
+                                                }
+                                                @foreach (var expandedGroupId in ViewBag.ExpandedGroupIds)
+                                                {
+                                                    if (expandedGroupId != group.StudentsGroupId)
+                                                    {
+                                                        <input type="hidden" name="expandedGroupIds" value="@expandedGroupId" />
+                                                    }
+                                                }
+                                                <button type="submit" class="btn btn-sm btn-outline-primary">
+                                                    @group.Name
+                                                    @(ViewBag.ExpandedGroupIds.Contains(group.StudentsGroupId) ? "▼" : "▶")
+                                                </button>
+                                            </form>
+                                            @if (ViewBag.ExpandedGroupIds.Contains(group.StudentsGroupId))
+                                            {
+                                                <div class="ml-4 mt-2">
+                                                    <strong>Students:</strong>
+                                                    @if (group.Students != null && group.Students.Any())
+                                                    {
+                                                        <ul class="list-unstyled">
+                                                            @foreach (var student in group.Students)
+                                                            {
+                                                                <li>@student.FirstName @student.LastName</li>
+                                                            }
+                                                        </ul>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>No students in this group.</span>
+                                                    }
+                                                </div>
+                                            }
+                                        </li>
                                     }
                                 </ul>
                             }

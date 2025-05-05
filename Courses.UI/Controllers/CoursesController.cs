@@ -12,22 +12,41 @@ namespace Courses.UI.Controllers
             _courseService = courseService;
         }
 
-        public async Task<IActionResult> Index(int? selectedCourseId, List<int> expandedCourseIds = null, bool? hideCourse = null)
+        public async Task<IActionResult> Index(
+            int? selectedCourseId, 
+            List<int> expandedCourseIds = null, 
+            bool? hideCourse = null,
+            int? selectedGroupId = null,
+            List<int> expandedGroupIds = null,
+            bool? hideGroup = null)
         {
             var courses = await _courseService.GetAllCoursesAsync();
-            var expandedIds = expandedCourseIds ?? new List<int>();
             
+            var expandedCourseIdsList = expandedCourseIds ?? new List<int>();
             if (hideCourse == true && selectedCourseId.HasValue)
             {
-                expandedIds.Remove(selectedCourseId.Value);
+                expandedCourseIdsList.Remove(selectedCourseId.Value);
             }
-            else if (selectedCourseId.HasValue && !expandedIds.Contains(selectedCourseId.Value))
+            else if (selectedCourseId.HasValue && !expandedCourseIdsList.Contains(selectedCourseId.Value))
             {
-                expandedIds.Add(selectedCourseId.Value);
+                expandedCourseIdsList.Add(selectedCourseId.Value);
             }
             
-            ViewBag.ExpandedCourseIds = expandedIds;
+            var expandedGroupIdsList = expandedGroupIds ?? new List<int>();
+            if (hideGroup == true && selectedGroupId.HasValue)
+            {
+                expandedGroupIdsList.Remove(selectedGroupId.Value);
+            }
+            else if (selectedGroupId.HasValue && !expandedGroupIdsList.Contains(selectedGroupId.Value))
+            {
+                expandedGroupIdsList.Add(selectedGroupId.Value);
+            }
+            
+            ViewBag.ExpandedCourseIds = expandedCourseIdsList;
+            ViewBag.ExpandedGroupIds = expandedGroupIdsList;
             ViewBag.SelectedCourseId = selectedCourseId;
+            ViewBag.SelectedGroupId = selectedGroupId;
+            
             return View(courses);
         }
     }
