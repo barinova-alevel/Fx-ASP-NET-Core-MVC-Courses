@@ -1,0 +1,25 @@
+@model Courses.DAL.Models.Dtos.StudentDto
+@{
+    ViewData["Title"] = $"{Model.FirstName} {Model.LastName}";
+}
+
+<div class="container">
+    <h1>@Model.FirstName @Model.LastName</h1>
+    
+    <div class="card mt-4">
+        <div class="card-body">
+            <h5 class="card-title">Student Information</h5>
+            <dl class="row">
+                <dt class="col-sm-3">Student ID</dt>
+                <dd class="col-sm-9">@Model.StudentId</dd>
+
+                <dt class="col-sm-3">Group ID</dt>
+                <dd class="col-sm-9">@Model.GroupId</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a asp-controller="Courses" asp-action="Index" class="btn btn-secondary">Back to Courses</a>
+    </div>
+</div> 

@@ -86,7 +86,11 @@
                                                         <ul class="list-unstyled">
                                                             @foreach (var student in group.Students)
                                                             {
-                                                                <li>@student.FirstName @student.LastName</li>
+                                                                <li>
+                                                                    <a asp-controller="Student" asp-action="Details" asp-route-id="@student.StudentId" class="text-decoration-none">
+                                                                        @student.FirstName @student.LastName
+                                                                    </a>
+                                                                </li>
                                                             }
                                                         </ul>
                                                     }

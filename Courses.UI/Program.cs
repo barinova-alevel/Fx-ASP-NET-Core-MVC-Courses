@@ -23,10 +23,12 @@ options.UseSqlServer(webAppBuilder.Configuration.GetConnectionString("DefaultCon
 // Register repositories
 webAppBuilder.Services.AddScoped<ICourseRepository, CourseRepository>();
 webAppBuilder.Services.AddScoped<IStudentsGroupRepository, StudentsGroupRepository>();
+webAppBuilder.Services.AddScoped<IStudentRepository, StudentRepository>();
 
 // Register services
 webAppBuilder.Services.AddScoped<ICourseService, CourseService>();
 webAppBuilder.Services.AddScoped<IStudentsGroupService, StudentsGroupService>();
+webAppBuilder.Services.AddScoped<IStudentService, StudentService>();
 
 var connectionString = webAppBuilder.Configuration.GetConnectionString("DefaultConnection");
 Log.Logger.Information($"Using connection: {connectionString}");
