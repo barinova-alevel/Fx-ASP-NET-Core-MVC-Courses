@@ -27,5 +27,36 @@ namespace Courses.UI.Controllers
             }
             return View(student);
         }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var student = await _studentService.GetStudentByIdAsync(id);
+            if (student == null)
+            {
+                return NotFound();
+            }
+            return View(student);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, StudentDto student)
+        {
+            if (id != student.StudentId)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                var updatedStudent = await _studentService.UpdateStudentAsync(id, student);
+                if (updatedStudent == null)
+                {
+                    return NotFound();
+                }
+                return RedirectToAction(nameof(Details), new { id = updatedStudent.StudentId });
+            }
+            return View(student);
+        }
     }
 }

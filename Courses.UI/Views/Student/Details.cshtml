@@ -10,16 +10,17 @@
         <div class="card-body">
             <h5 class="card-title">Student Information</h5>
             <dl class="row">
-                <dt class="col-sm-3">Student ID</dt>
-                <dd class="col-sm-9">@Model.StudentId</dd>
+                <dt class="col-sm-3">Student First Name</dt>
+                <dd class="col-sm-9">@Model.FirstName</dd>
 
-                <dt class="col-sm-3">Group ID</dt>
-                <dd class="col-sm-9">@Model.GroupId</dd>
+                <dt class="col-sm-3">Student Last Name</dt>
+                <dd class="col-sm-9">@Model.LastName</dd>
             </dl>
         </div>
     </div>
 
     <div class="mt-4">
+        <a asp-action="Edit" asp-route-id="@Model.StudentId" class="btn btn-primary">Edit</a>
         <a asp-controller="Courses" asp-action="Index" class="btn btn-secondary">Back to Courses</a>
     </div>
 </div> 

@@ -18,5 +18,12 @@ namespace Courses.DAL.Repositories
                 .Include(s => s.Group)
                 .FirstOrDefaultAsync(s => s.StudentId == id);
         }
+
+        public async Task<Student> UpdateAsync(Student student)
+        {
+            _context.Students.Update(student);
+            await _context.SaveChangesAsync();
+            return student;
+        }
     }
 }
