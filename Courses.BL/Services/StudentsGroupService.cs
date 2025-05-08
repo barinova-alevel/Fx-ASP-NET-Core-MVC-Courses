@@ -97,5 +97,56 @@ namespace Courses.BL.Services
             await _groupRepository.DeleteAsync(id);
             return OperationResult.Ok("Group deleted successfully");
         }
+
+        public async Task<IEnumerable<StudentsGroupDto>> GetAvailableGroupsAsync(int currentGroupId)
+        {
+            var groups = await _groupRepository.GetAllAsync();
+            return groups
+                .Where(g => g.StudentsGroupId != currentGroupId)
+                .Select(g => new StudentsGroupDto
+                {
+                    StudentsGroupId = g.StudentsGroupId,
+                    CourseId = g.CourseId,
+                    Name = g.Name,
+                    Students = g.Students.Select(s => new StudentDto
+                    {
+                        StudentId = s.StudentId,
+                        GroupId = s.GroupId,
+                        FirstName = s.FirstName,
+                        LastName = s.LastName
+                    }).ToList()
+                });
+        }
+
+        public async Task<OperationResult> ClearGroupAsync(int sourceGroupId, int targetGroupId)
+        {
+            var sourceGroup = await _groupRepository.GetByIdAsync(sourceGroupId);
+            if (sourceGroup == null)
+            {
+                return OperationResult.Error($"Source group with Id {sourceGroupId} not found");
+            }
+
+            var targetGroup = await _groupRepository.GetByIdAsync(targetGroupId);
+            if (targetGroup == null)
+            {
+                return OperationResult.Error($"Target group with Id {targetGroupId} not found");
+            }
+
+            if (!sourceGroup.Students.Any())
+            {
+                return OperationResult.Error("Source group has no students to move");
+            }
+
+            try
+            {
+                await _groupRepository.MoveStudentsAsync(sourceGroupId, targetGroupId);
+                return OperationResult.Ok($"Successfully moved {sourceGroup.Students.Count} students to group {targetGroup.Name}");
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error(ex, "Error moving students between groups");
+                return OperationResult.Error("An error occurred while moving students. Please try again.");
+            }
+        }
     }
 }

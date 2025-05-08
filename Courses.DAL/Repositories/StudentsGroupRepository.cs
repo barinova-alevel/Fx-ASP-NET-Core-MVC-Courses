@@ -44,5 +44,19 @@ namespace Courses.DAL.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task MoveStudentsAsync(int sourceGroupId, int targetGroupId)
+        {
+            var students = await _context.Students
+                .Where(s => s.GroupId == sourceGroupId)
+                .ToListAsync();
+
+            foreach (var student in students)
+            {
+                student.GroupId = targetGroupId;
+            }
+
+            await _context.SaveChangesAsync();
+        }
     }
 }

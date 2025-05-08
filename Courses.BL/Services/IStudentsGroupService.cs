@@ -9,5 +9,7 @@ namespace Courses.BL.Services
         Task<IEnumerable<StudentsGroupDto>> GetAllGroupsAsync();
         Task<StudentsGroupDto> UpdateGroupAsync(int id, StudentsGroupDto groupDto);
         Task<OperationResult> DeleteGroupAsync(int id);
+        Task<IEnumerable<StudentsGroupDto>> GetAvailableGroupsAsync(int currentGroupId);
+        Task<OperationResult> ClearGroupAsync(int sourceGroupId, int targetGroupId);
     }
 }

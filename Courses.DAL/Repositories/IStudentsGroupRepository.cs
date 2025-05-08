@@ -8,5 +8,6 @@ namespace Courses.DAL.Repositories
         Task<StudentsGroup> GetByIdAsync(int id);
         Task<StudentsGroup> UpdateAsync(StudentsGroup group);
         Task DeleteAsync(int id);
+        Task MoveStudentsAsync(int sourceGroupId, int targetGroupId);
     }
 }

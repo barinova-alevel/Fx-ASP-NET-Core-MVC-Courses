@@ -49,8 +49,28 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+// Allow specific actions from Student and Group controllers
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Courses}/{action=Index}/{id?}");
+    name: "student",
+    pattern: "Student/{action=Details}/{id?}",
+    defaults: new { controller = "Student" });
+
+app.MapControllerRoute(
+    name: "group",
+    pattern: "Group/{action=Edit}/{id?}",
+    defaults: new { controller = "Group" });
+
+// Main Courses route
+app.MapControllerRoute(
+    name: "courses",
+    pattern: "Courses/{action=Index}/{id?}",
+    defaults: new { controller = "Courses" });
+
+// Add catch-all route for unknown URLs
+app.MapFallback(context =>
+{
+    context.Response.Redirect("/Courses");
+    return Task.CompletedTask;
+});
 
 app.Run();

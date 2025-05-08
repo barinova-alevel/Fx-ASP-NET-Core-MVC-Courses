@@ -72,18 +72,36 @@ namespace Courses.UI.Controllers
             return RedirectToAction("Index", "Courses");
         }
 
-        //[HttpGet("{id}")]
-        //public async Task<IActionResult> GetGroupById(int id)
-        //{
-        //    try
-        //    {
-        //        var group = await _studentsGroupService.GetGroupByIdAsync(id); //null ref exception
-        //        return Ok(group); 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return NotFound(ex.Message); //handle not founf
-        //    }
-        //}
+        //GET, requests when user clicks the "Clear Group" button, loads group data and available target groups
+        public async Task<IActionResult> ClearGroup(int id)
+        {
+            var group = await _studentsGroupService.GetGroupByIdAsync(id);
+            if (group == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.AvailableGroups = await _studentsGroupService.GetAvailableGroupsAsync(id);
+            return View(group);
+        }
+
+        //POST, handles the form submission, processes the actual student movement
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ClearGroup(int sourceGroupId, int targetGroupId)
+        {
+            var result = await _studentsGroupService.ClearGroupAsync(sourceGroupId, targetGroupId);
+            
+            if (result.Success)
+            {
+                TempData["SuccessMessage"] = result.Message;
+            }
+            else
+            {
+                TempData["ErrorMessage"] = result.Message;
+            }
+
+            return RedirectToAction("Index", "Courses");
+        }
     }
 }
