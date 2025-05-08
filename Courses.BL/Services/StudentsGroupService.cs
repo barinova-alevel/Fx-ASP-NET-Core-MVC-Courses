@@ -1,5 +1,6 @@
 ﻿using Courses.DAL.Models.Dtos;
 using Courses.DAL.Repositories;
+using Courses.BL.Models;
 using Serilog;
 
 namespace Courses.BL.Services
@@ -36,6 +37,7 @@ namespace Courses.BL.Services
             if (group == null)
             {
                 Log.Logger.Information($"Group with Id {id} not found");
+                return null;
             }
 
             return new StudentsGroupDto
@@ -76,6 +78,24 @@ namespace Courses.BL.Services
                     LastName = s.LastName
                 }).ToList()
             };
+        }
+
+        public async Task<OperationResult> DeleteGroupAsync(int id)
+        {
+            var group = await _groupRepository.GetByIdAsync(id);
+            if (group == null)
+            {
+                Log.Logger.Information($"Group with Id {id} not found");
+                return OperationResult.Error($"Group with Id {id} not found");
+            }
+
+            if (group.Students != null && group.Students.Any())
+            {
+                return OperationResult.Error("Cannot delete group: There are students assigned to this group");
+            }
+
+            await _groupRepository.DeleteAsync(id);
+            return OperationResult.Ok("Group deleted successfully");
         }
     }
 }

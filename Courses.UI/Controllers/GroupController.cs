@@ -1,6 +1,7 @@
 ﻿using Courses.BL.Services;
 using Microsoft.AspNetCore.Mvc;
 using Courses.DAL.Models.Dtos;
+using Courses.BL.Models;
 
 namespace Courses.UI.Controllers
 {
@@ -44,22 +45,31 @@ namespace Courses.UI.Controllers
 
             if (ModelState.IsValid)
             {
-                try
+                var updatedGroup = await _studentsGroupService.UpdateGroupAsync(id, group);
+                if (updatedGroup == null)
                 {
-                    var updatedGroup = await _studentsGroupService.UpdateGroupAsync(id, group);
-                    if (updatedGroup == null)
-                    {
-                        return NotFound();
-                    }
-                    TempData["SuccessMessage"] = "Group updated successfully";
-                    return RedirectToAction("Index", "Courses");
+                    return NotFound();
                 }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError("", "An error occurred while saving the group. Please try again.");
-                }
+                TempData["SuccessMessage"] = "Group updated successfully";
+                return RedirectToAction("Index", "Courses");
             }
             return View(group);
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _studentsGroupService.DeleteGroupAsync(id);
+            
+            if (result.Success)
+            {
+                TempData["SuccessMessage"] = result.Message;
+            }
+            else
+            {
+                TempData["ErrorMessage"] = result.Message;
+            }
+
+            return RedirectToAction("Index", "Courses");
         }
 
         //[HttpGet("{id}")]

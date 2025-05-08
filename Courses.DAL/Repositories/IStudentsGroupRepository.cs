@@ -7,5 +7,6 @@ namespace Courses.DAL.Repositories
         Task<IEnumerable<StudentsGroup>> GetAllAsync();
         Task<StudentsGroup> GetByIdAsync(int id);
         Task<StudentsGroup> UpdateAsync(StudentsGroup group);
+        Task DeleteAsync(int id);
     }
 }

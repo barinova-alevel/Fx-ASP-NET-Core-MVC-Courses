@@ -34,5 +34,15 @@ namespace Courses.DAL.Repositories
             await _context.SaveChangesAsync();
             return group;
         }
+
+        public async Task DeleteAsync(int id)
+        {
+            var group = await _context.StudentsGroups.FindAsync(id);
+            if (group != null)
+            {
+                _context.StudentsGroups.Remove(group);
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }
