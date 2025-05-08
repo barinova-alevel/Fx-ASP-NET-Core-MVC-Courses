@@ -52,5 +52,30 @@ namespace Courses.BL.Services
                 }).ToList()
             };
         }
+
+        public async Task<StudentsGroupDto> UpdateGroupAsync(int id, StudentsGroupDto groupDto)
+        {
+           var group = await _groupRepository.GetByIdAsync(id);
+            if (group == null)
+            {
+                Log.Logger.Information($"Group with Id {id} not found");
+                return null;
+            }
+            group.Name = groupDto.Name;
+            var updatedGroup = await _groupRepository.UpdateAsync(group);
+            return new StudentsGroupDto
+            {
+                StudentsGroupId = updatedGroup.StudentsGroupId,
+                CourseId = updatedGroup.CourseId,
+                Name = updatedGroup.Name,
+                Students = updatedGroup.Students.Select(s => new StudentDto
+                {
+                    StudentId = s.StudentId,
+                    GroupId = s.GroupId,
+                    FirstName = s.FirstName,
+                    LastName = s.LastName
+                }).ToList()
+            };
+        }
     }
 }

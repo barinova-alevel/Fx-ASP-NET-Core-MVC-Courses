@@ -5,7 +5,7 @@ namespace Courses.DAL.Repositories
     public interface IStudentsGroupRepository
     {
         Task<IEnumerable<StudentsGroup>> GetAllAsync();
-
         Task<StudentsGroup> GetByIdAsync(int id);
+        Task<StudentsGroup> UpdateAsync(StudentsGroup group);
     }
 }

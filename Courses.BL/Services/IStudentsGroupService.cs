@@ -6,5 +6,6 @@ namespace Courses.BL.Services
     {
         Task<StudentsGroupDto> GetGroupByIdAsync(int id);
         Task<IEnumerable<StudentsGroupDto>> GetAllGroupsAsync();
+        Task<StudentsGroupDto> UpdateGroupAsync(int id, StudentsGroupDto groupDto);
     }
 }

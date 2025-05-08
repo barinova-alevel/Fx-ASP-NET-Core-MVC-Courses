@@ -5,6 +5,15 @@
 
 <div class="container">
     <h1>Courses</h1>
+    
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
     <table class="table">
         <thead>
             <tr>
@@ -76,6 +85,9 @@
                                                     @group.Name
                                                     @(ViewBag.ExpandedGroupIds.Contains(group.StudentsGroupId) ? "▼" : "▶")
                                                 </button>
+                                                <a asp-controller="Group" asp-action="Edit" asp-route-id="@group.StudentsGroupId" class="btn btn-sm btn-outline-primary">
+                                                    Edit Group
+                                                </a>
                                             </form>
                                             @if (ViewBag.ExpandedGroupIds.Contains(group.StudentsGroupId))
                                             {
