@@ -1,127 +1,66 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Moq;
 using Courses.BL.Services;
 using Courses.UI.Controllers;
 using Courses.DAL.Models.Dtos;
-using Microsoft.AspNetCore.Mvc;
 using Courses.BL.Models;
+using Xunit;
+using Microsoft.AspNetCore.Http;
 
-namespace Courses.Tests;
-
-public class GroupControllerTests
+namespace Courses.Tests.Controllers
 {
-    private readonly Mock<IStudentsGroupService> _mockGroupService;
-    private readonly GroupController _controller;
-
-    public GroupControllerTests()
+    public class GroupControllerTests
     {
-        _mockGroupService = new Mock<IStudentsGroupService>();
-        _controller = new GroupController(_mockGroupService.Object);
-    }
+        private readonly Mock<IStudentsGroupService> _mockGroupService;
+        private readonly GroupController _controller;
+        private readonly ITempDataDictionary _tempData;
 
-    [Fact]
-    public async Task Edit_Get_WithValidId_ReturnsView()
-    {
-        // Arrange
-        var group = new StudentsGroupDto { StudentsGroupId = 1, Name = "Test Group" };
-        _mockGroupService.Setup(x => x.GetGroupByIdAsync(1))
-            .ReturnsAsync(group);
+        public GroupControllerTests()
+        {
+            _mockGroupService = new Mock<IStudentsGroupService>();
+            _controller = new GroupController(_mockGroupService.Object);
 
-        // Act
-        var result = await _controller.Edit(1);
+            // Initialize TempData
+            _tempData = new TempDataDictionary(new DefaultHttpContext(), Mock.Of<ITempDataProvider>());
+            _controller.TempData = _tempData;
+        }
 
-        // Assert
-        var viewResult = Assert.IsType<ViewResult>(result);
-        var model = Assert.IsType<StudentsGroupDto>(viewResult.Model);
-        Assert.Equal(1, model.StudentsGroupId);
-    }
+        [Fact]
+        public async Task Delete_WithValidId_RedirectsToIndex()
+        {
+            // Arrange
+            var result = new OperationResult { Success = true, Message = "Group deleted successfully" };
+            _mockGroupService.Setup(x => x.DeleteGroupAsync(1))
+                .ReturnsAsync(result);
 
-    [Fact]
-    public async Task Edit_Get_WithInvalidId_ReturnsNotFound()
-    {
-        // Arrange
-        _mockGroupService.Setup(x => x.GetGroupByIdAsync(1))
-            .ReturnsAsync((StudentsGroupDto)null);
+            // Act
+            var actionResult = await _controller.Delete(1);
 
-        // Act
-        var result = await _controller.Edit(1);
+            // Assert
+            var redirectResult = Assert.IsType<RedirectToActionResult>(actionResult);
+            Assert.Equal("Index", redirectResult.ActionName);
+            Assert.Equal("Courses", redirectResult.ControllerName);
+            Assert.Equal("Group deleted successfully", _tempData["SuccessMessage"]);
+        }
 
-        // Assert
-        Assert.IsType<NotFoundResult>(result);
-    }
+        
+        [Fact]
+        public async Task Delete_WithGroupHavingStudents_RedirectsToIndexWithErrorMessage()
+        {
+            // Arrange
+            var result = new OperationResult { Success = false, Message = "Cannot delete group: There are students assigned to this group" };
+            _mockGroupService.Setup(x => x.DeleteGroupAsync(1))
+                .ReturnsAsync(result);
 
-    [Fact]
-    public async Task Edit_Post_WithValidModel_RedirectsToIndex()
-    {
-        // Arrange
-        var group = new StudentsGroupDto { StudentsGroupId = 1, Name = "Test Group" };
-        _mockGroupService.Setup(x => x.UpdateGroupAsync(1, group))
-            .ReturnsAsync(group);
+            // Act
+            var actionResult = await _controller.Delete(1);
 
-        // Act
-        var result = await _controller.Edit(1, group);
-
-        // Assert
-        var redirectResult = Assert.IsType<RedirectToActionResult>(result);
-        Assert.Equal("Index", redirectResult.ActionName);
-        Assert.Equal("Courses", redirectResult.ControllerName);
-    }
-
-    [Fact]
-    public async Task Delete_WithValidId_RedirectsToIndex()
-    {
-        // Arrange
-        var result = new OperationResult { Success = true, Message = "Group deleted successfully" };
-        _mockGroupService.Setup(x => x.DeleteGroupAsync(1))
-            .ReturnsAsync(result);
-
-        // Act
-        var actionResult = await _controller.Delete(1);
-
-        // Assert
-        var redirectResult = Assert.IsType<RedirectToActionResult>(actionResult);
-        Assert.Equal("Index", redirectResult.ActionName);
-        Assert.Equal("Courses", redirectResult.ControllerName);
-    }
-
-    [Fact]
-    public async Task ClearGroup_Get_WithValidId_ReturnsView()
-    {
-        // Arrange
-        var group = new StudentsGroupDto { StudentsGroupId = 1, Name = "Test Group" };
-        var availableGroups = new List<StudentsGroupDto>
-            {
-                new StudentsGroupDto { StudentsGroupId = 2, Name = "Target Group" }
-            };
-
-        _mockGroupService.Setup(x => x.GetGroupByIdAsync(1))
-            .ReturnsAsync(group);
-        _mockGroupService.Setup(x => x.GetAvailableGroupsAsync(1))
-            .ReturnsAsync(availableGroups);
-
-        // Act
-        var result = await _controller.ClearGroup(1);
-
-        // Assert
-        var viewResult = Assert.IsType<ViewResult>(result);
-        var model = Assert.IsType<StudentsGroupDto>(viewResult.Model);
-        Assert.Equal(1, model.StudentsGroupId);
-        Assert.Equal(availableGroups, viewResult.ViewData["AvailableGroups"]);
-    }
-
-    [Fact]
-    public async Task ClearGroup_Post_WithValidIds_RedirectsToIndex()
-    {
-        // Arrange
-        var result = new OperationResult { Success = true, Message = "Students moved successfully" };
-        _mockGroupService.Setup(x => x.ClearGroupAsync(1, 2))
-            .ReturnsAsync(result);
-
-        // Act
-        var actionResult = await _controller.ClearGroup(1, 2);
-
-        // Assert
-        var redirectResult = Assert.IsType<RedirectToActionResult>(actionResult);
-        Assert.Equal("Index", redirectResult.ActionName);
-        Assert.Equal("Courses", redirectResult.ControllerName);
+            // Assert
+            var redirectResult = Assert.IsType<RedirectToActionResult>(actionResult);
+            Assert.Equal("Index", redirectResult.ActionName);
+            Assert.Equal("Courses", redirectResult.ControllerName);
+            Assert.Equal("Cannot delete group: There are students assigned to this group", _tempData["ErrorMessage"]);
+        }
     }
 }

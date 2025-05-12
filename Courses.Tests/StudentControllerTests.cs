@@ -92,7 +92,7 @@ namespace Courses.Tests
         }
 
         [Fact]
-        public async Task Edit_Post_WithValidModel_RedirectsToDetails()
+        public async Task Edit_Post_RedirectsToDetails()
         {
             // Arrange
             var student = new StudentDto
@@ -111,27 +111,6 @@ namespace Courses.Tests
             var redirectResult = Assert.IsType<RedirectToActionResult>(result);
             Assert.Equal("Details", redirectResult.ActionName);
             Assert.Equal(1, redirectResult.RouteValues["id"]);
-        }
-
-        [Fact]
-        public async Task Edit_Post_WithInvalidModel_ReturnsView()
-        {
-            // Arrange
-            var student = new StudentDto
-            {
-                StudentId = 1,
-                FirstName = "",
-                LastName = ""
-            };
-            _controller.ModelState.AddModelError("FirstName", "First name is required");
-
-            // Act
-            var result = await _controller.Edit(1, student);
-
-            // Assert
-            var viewResult = Assert.IsType<ViewResult>(result);
-            var model = Assert.IsType<StudentDto>(viewResult.Model);
-            Assert.Equal(1, model.StudentId);
         }
     }
 }

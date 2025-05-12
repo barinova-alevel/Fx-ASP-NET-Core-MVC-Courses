@@ -62,7 +62,7 @@ namespace Courses.Tests
         }
 
         [Fact]
-        public async Task Index_WithHideCourse_RemovesCourseFromExpanded()
+        public async Task Index_RemovesCourseFromExpanded()
         {
             // Arrange
             var courses = new List<CourseDto>
