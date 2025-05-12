@@ -1,5 +1,170 @@
-﻿@{
+﻿@model IEnumerable<Courses.DAL.Models.Dtos.CourseDto>
+@{
     ViewData["Title"] = "Courses List";
 }
 
-<p2>Courses view</p2>
+<div class="container">
+    <h1>Courses</h1>
+    
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Description
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var course in Model)
+            {
+                <tr id="course-@course.CourseId">
+                    <td>@course.Name</td>
+                    <td>@course.Description</td>
+                    <td>
+                        <form asp-action="Index" method="get" style="display:inline;">
+                            <input type="hidden" name="selectedCourseId" value="@course.CourseId" />
+                            @if (ViewBag.ExpandedCourseIds.Contains(course.CourseId))
+                            {
+                                <input type="hidden" name="hideCourse" value="true" />
+                            }
+                            @foreach (var expandedId in ViewBag.ExpandedCourseIds)
+                            {
+                                if (expandedId != course.CourseId)
+                                {
+                                    <input type="hidden" name="expandedCourseIds" value="@expandedId" />
+                                }
+                            }
+                            <button type="submit" class="btn btn-link">
+                                @(ViewBag.ExpandedCourseIds.Contains(course.CourseId) ? "Hide groups" : "Show groups")
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                @if (ViewBag.ExpandedCourseIds.Contains(course.CourseId))
+                {
+                    <tr>
+                        <td colspan="3">
+                            <strong>Groups:</strong>
+                            @if (course.StudentsGroups != null && course.StudentsGroups.Any())
+                            {
+                                <ul class="list-unstyled">
+                                    @foreach (var group in course.StudentsGroups)
+                                    {
+                                        <li class="mb-2">
+                                            <form asp-action="Index" method="get" style="display:inline;">
+                                                <input type="hidden" name="selectedCourseId" value="@course.CourseId" />
+                                                @foreach (var expandedId in ViewBag.ExpandedCourseIds)
+                                                {
+                                                    <input type="hidden" name="expandedCourseIds" value="@expandedId" />
+                                                }
+                                                <input type="hidden" name="selectedGroupId" value="@group.StudentsGroupId" />
+                                                @if (ViewBag.ExpandedGroupIds.Contains(group.StudentsGroupId))
+                                                {
+                                                    <input type="hidden" name="hideGroup" value="true" />
+                                                }
+                                                @foreach (var expandedGroupId in ViewBag.ExpandedGroupIds)
+                                                {
+                                                    if (expandedGroupId != group.StudentsGroupId)
+                                                    {
+                                                        <input type="hidden" name="expandedGroupIds" value="@expandedGroupId" />
+                                                    }
+                                                }
+                                                <button type="submit" class="btn btn-sm btn-outline-primary">
+                                                    @group.Name
+                                                    @(ViewBag.ExpandedGroupIds.Contains(group.StudentsGroupId) ? "▼" : "▶")
+                                                </button>
+                                                <a asp-controller="Group" asp-action="Edit" asp-route-id="@group.StudentsGroupId" class="btn btn-sm btn-outline-primary">
+                                                    Edit Group
+                                                </a>
+                                                <button type="button" class="btn btn-sm btn-outline-danger" 
+                                                        onclick="confirmDelete(@group.StudentsGroupId, @(group.Students?.Count ?? 0))">
+                                                    Delete Group
+                                                </button>
+                                            </form>
+                                            @if (ViewBag.ExpandedGroupIds.Contains(group.StudentsGroupId))
+                                            {
+                                                <div class="ml-4 mt-2">
+                                                    <strong>Students:</strong>
+                                                    @if (group.Students != null && group.Students.Any())
+                                                    {
+                                                        <ul class="list-unstyled">
+                                                            @foreach (var student in group.Students)
+                                                            {
+                                                                <li>
+                                                                    <a asp-controller="Student" asp-action="Details" asp-route-id="@student.StudentId" class="text-decoration-none">
+                                                                        @student.FirstName @student.LastName
+                                                                    </a>
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                        <a asp-controller="Group" asp-action="ClearGroup" asp-route-id="@group.StudentsGroupId" 
+                                                           class="btn btn-sm btn-warning">
+                                                            Clear Group
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>No students in this group.</span>
+                                                    }
+                                                </div>
+                                            }
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                            else
+                            {
+                                <span>No groups available.</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectedCourseId = '@ViewBag.SelectedCourseId';
+            if (selectedCourseId) {
+                const element = document.getElementById('course-' + selectedCourseId);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+        });
+
+        function confirmDelete(groupId, studentCount) {
+            if (studentCount > 0) {
+                alert('Cannot delete group: There are students assigned to this group. Please remove all students first.');
+                return;
+            }
+            
+            if (confirm('Are you sure you want to delete this group?')) {
+                window.location.href = '@Url.Action("Delete", "Group")/' + groupId;
+            }
+        }
+    </script>
+}
