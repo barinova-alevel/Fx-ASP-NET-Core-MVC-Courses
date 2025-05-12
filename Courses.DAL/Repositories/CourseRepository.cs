@@ -1,36 +1,29 @@
 ﻿using System;
 using Courses.DAL.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Courses.DAL.Repositories
 {
     public class CourseRepository : ICourseRepository
     {
-        //Uncomment when db context is added:
+        private readonly CoursesDbContext _context;
 
-        //private readonly AppDbContext _context;
-
-        //public CourseRepository(AppDbContext context)
-        //{
-        //    _context = context;
-        //}
-
-        //public async Task<Course> GetByIdAsync(int id)
-        //{
-        //    return await _context.Courses.FindAsync(id);
-        //}
-
-        //public async Task<IEnumerable<Course>> GetAllAsync()
-        //{
-        //    return await _context.Courses.ToListAsync();
-        //}
-        public Task<IEnumerable<Course>> GetAllAsync()
+        public CourseRepository(CoursesDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<Course> GetByIdAsync(int id)
+        public async Task<IEnumerable<Course>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Courses
+                .Include(c => c.StudentsGroups)
+                .ThenInclude(g => g.Students)
+                .ToListAsync();
+        }
+
+        public async Task<Course> GetByIdAsync(int id)
+        {
+            return await _context.Courses.FindAsync(id);
         }
     }
 }
