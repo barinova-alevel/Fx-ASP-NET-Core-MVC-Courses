@@ -20,12 +20,10 @@ webAppBuilder.Services.AddControllersWithViews();
 webAppBuilder.Services.AddDbContext<CoursesDbContext>(options =>
 options.UseSqlServer(webAppBuilder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Register repositories
 webAppBuilder.Services.AddScoped<ICourseRepository, CourseRepository>();
 webAppBuilder.Services.AddScoped<IStudentsGroupRepository, StudentsGroupRepository>();
 webAppBuilder.Services.AddScoped<IStudentRepository, StudentRepository>();
 
-// Register services
 webAppBuilder.Services.AddScoped<ICourseService, CourseService>();
 webAppBuilder.Services.AddScoped<IStudentsGroupService, StudentsGroupService>();
 webAppBuilder.Services.AddScoped<IStudentService, StudentService>();
@@ -34,11 +32,9 @@ var connectionString = webAppBuilder.Configuration.GetConnectionString("DefaultC
 Log.Logger.Information($"Using connection: {connectionString}");
 var app = webAppBuilder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -49,7 +45,6 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-// Allow specific actions from Student and Group controllers
 app.MapControllerRoute(
     name: "student",
     pattern: "Student/{action=Details}/{id?}",
@@ -60,13 +55,11 @@ app.MapControllerRoute(
     pattern: "Group/{action=Edit}/{id?}",
     defaults: new { controller = "Group" });
 
-// Main Courses route
 app.MapControllerRoute(
     name: "courses",
     pattern: "Courses/{action=Index}/{id?}",
     defaults: new { controller = "Courses" });
 
-// Add catch-all route for unknown URLs
 app.MapFallback(context =>
 {
     context.Response.Redirect("/Courses");
